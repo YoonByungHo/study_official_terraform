@@ -28,13 +28,13 @@
 #   }
 # }
 
-# - 생성 되는 ami
+# - 생성 안되는 ami
 data "aws_ami" "example" {
   most_recent      = true
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-kernel-5.10-hvm-2.0.20220606.1-arm-*"]
+    values = ["amzn2-ami-kernel-5.10-hvm-2.0.20220606.1-arm64-*"]
   }
 }
 
