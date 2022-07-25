@@ -81,7 +81,7 @@
 #   }
 # }
 
-# - 생성 시간이 1초로 제한
+# - 삭제 시간이 1초로 제한
 data "aws_ami" "example" {
   most_recent      = true
 
@@ -96,7 +96,7 @@ resource "aws_instance" "example" {
   ami           = data.aws_ami.example.id
 
   timeouts {
-    create = "1s"
-    # delete = "2h"
+    # create = "1s"
+    delete = "1s"
   }
 }
