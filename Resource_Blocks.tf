@@ -62,6 +62,26 @@
 # 지속 시간의 문자열 표현을 사용합니다.
 
 # - 생성 시간이 1분으로 제한
+# data "aws_ami" "example" {
+#   most_recent      = true
+
+#   filter {
+#     name   = "name"
+#     values = ["amzn2-ami-kernel-5.10-hvm-2.0.20220606.1-x86_64-*"]
+#   }
+# }
+
+# resource "aws_instance" "example" {
+#   instance_type = "t2.micro"
+#   ami           = data.aws_ami.example.id
+
+#   timeouts {
+#     create = "1m"
+#     # delete = "2h"
+#   }
+# }
+
+# - 생성 시간이 1초로 제한
 data "aws_ami" "example" {
   most_recent      = true
 
@@ -76,7 +96,7 @@ resource "aws_instance" "example" {
   ami           = data.aws_ami.example.id
 
   timeouts {
-    create = "1m"
+    create = "1s"
     # delete = "2h"
   }
 }
