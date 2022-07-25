@@ -17,7 +17,7 @@ data "aws_ami" "example" {
 
 resource "aws_instance" "example" {
   instance_type = "t2.micro"
-  ami           = "ami-abc123"
+  ami           = data.aws_ami.example.id
 
   lifecycle {
     # The AMI ID must refer to an AMI that contains an operating system
