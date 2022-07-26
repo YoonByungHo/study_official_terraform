@@ -4,6 +4,14 @@
 # 1. The depends_on Meta-Argument
 # Terraform이 자동으로 유추할 수 없는 숨겨진 리소스 또는 모듈 종속성을 처리하려면 extends_on 메타 인수를 사용하십시오. 
 # 리소스 또는 모듈이 다른 리소스의 동작에 의존하지만 인수에서 해당 리소스의 데이터에 액세스하지 않는 경우에만 종속성을 명시적으로 지정하면 됩니다.
+data "aws_ami" "example" {
+  most_recent      = true
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-kernel-5.10-hvm-2.0.20220606.1-x86_64-*"]
+  }
+}
 
 resource "aws_iam_role" "example" {
   name = "example"
@@ -58,7 +66,7 @@ resource "aws_iam_role_policy" "example" {
 }
 
 resource "aws_instance" "example" {
-  ami           = "ami-a1b2c3d4"
+  ami           = data.aws_ami.example.id
   instance_type = "t2.micro"
 
   # Terraform can infer from this that the instance profile must
