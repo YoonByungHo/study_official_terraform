@@ -36,11 +36,23 @@ resource "aws_iam_role_policy" "example" {
   name   = "example"
   role   = aws_iam_role.example.name
   policy = jsonencode({
-    "Statement" = [{
-      # This policy allows software running on the EC2 instance to
-      # access the S3 API.
-      "Action" = "s3:*",
-      "Effect" = "Allow",
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:DeleteObject",
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::*"
+            ]
+        }
+    ]
+}
     }],
   })
   depends_on = [
