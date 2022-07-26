@@ -82,21 +82,21 @@
 # }
 
 # - 생성 시간이 1초로 제한
-data "aws_ami" "example" {
-  most_recent      = true
+# data "aws_ami" "example" {
+#   most_recent      = true
 
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-kernel-5.10-hvm-2.0.20220606.1-x86_64-*"]
-  }
-}
+#   filter {
+#     name   = "name"
+#     values = ["amzn2-ami-kernel-5.10-hvm-2.0.20220606.1-x86_64-*"]
+#   }
+# }
 
-resource "aws_instance" "example" {
-  instance_type = "t2.micro"
-  ami           = data.aws_ami.example.id
+# resource "aws_instance" "example" {
+#   instance_type = "t2.micro"
+#   ami           = data.aws_ami.example.id
 
-  timeouts {
-    create = "1s"
-    # delete = "1s"
-  }
-}
+#   timeouts {
+#     create = "1s"
+#     # delete = "1s"
+#   }
+# }
