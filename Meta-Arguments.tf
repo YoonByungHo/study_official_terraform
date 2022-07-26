@@ -10,7 +10,20 @@ resource "aws_iam_role" "example" {
 
   # assume_role_policy is omitted for brevity in this example. Refer to the
   # documentation for aws_iam_role for a complete example.
-  assume_role_policy = "..."
+  assume_role_policy = <<POLICY
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "ec2.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
+}
+POLICY
 }
 
 resource "aws_iam_instance_profile" "example" {
