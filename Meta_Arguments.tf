@@ -110,7 +110,7 @@
 
 variable "subnet_ids" {
   type = list(string)
-  value = ["subnet-0f8d4af34649b8089", "subnet-01bd70c60c4d63cb0"]
+  default = ["subnet-0f8d4af34649b8089", "subnet-01bd70c60c4d63cb0"]
 }
 
 # var.subnet_ids에 두개의 서브넷 아이디를 입력했으므로 2개의 인스턴스가 생성됨
