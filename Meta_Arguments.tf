@@ -87,14 +87,14 @@
 # 그러나 때로는 각각에 대해 별도의 블록을 작성하지 않고 여러 유사한 개체(컴퓨팅 인스턴스의 고정 풀과 같은)를 관리하고 싶을 때가 있습니다. 
 # Terraform에는 count 및 for_each의 두 가지 방법이 있습니다.
 
-# data "aws_ami" "example" {
-#   most_recent      = true
+data "aws_ami" "example" {
+  most_recent      = true
 
-#   filter {
-#     name   = "name"
-#     values = ["amzn2-ami-kernel-5.10-hvm-2.0.20220606.1-x86_64-*"]
-#   }
-# }
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-kernel-5.10-hvm-2.0.20220606.1-x86_64-*"]
+  }
+}
 
 # # count로 4개의 인스턴스가 생성됨
 # resource "aws_instance" "server" {
