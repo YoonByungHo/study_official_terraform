@@ -36,7 +36,6 @@ resource "aws_iam_role_policy" "example" {
   name   = "example"
   role   = aws_iam_role.example.name
   policy = jsonencode({
-{
     "Version": "2012-10-17",
     "Statement": [
         {
@@ -52,8 +51,6 @@ resource "aws_iam_role_policy" "example" {
             ]
         }
     ]
-}
-    }],
   })
   depends_on = [
     aws_iam_role.example
