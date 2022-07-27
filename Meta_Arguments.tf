@@ -161,25 +161,12 @@
 # }
 
 # Child module
-# module "bucket" {
-#   for_each = toset(["assets", "media"])
-#   source   = "./publish_bucket"
-#   name     = "${each.key}_bucket"
-# }
+# set에 정의된 버킷 이름을 publish_bucket의 main.tf로 던져서 버킷 생성
+# set의 크기 = s3의 갯수
+module "bucket" {
+  for_each = toset(["assets", "media"])
+  source   = "./publish_bucket"
+  name     = "${each.key}_bucket"
+}
 
-# # publish_bucket/bucket-and-cloudfront.tf
-# variable "name" {} # this is the input parameter of the module
-
-# resource "aws_s3_bucket" "example" {
-#   # Because var.name includes each.key in the calling
-#   # module block, its value will be different for
-#   # each instance of this module.
-#   bucket = var.name
-
-#   # ...
-# }
-
-# resource "aws_iam_user" "deploy_user" {
-#   # ...
-# }
 
