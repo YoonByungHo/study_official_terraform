@@ -127,3 +127,28 @@
 #   }
 # }
 
+# The for_each Meta-Argument
+# map:
+data "aws_ami" "example" {
+  most_recent      = true
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-kernel-5.10-hvm-2.0.20220606.1-x86_64-*"]
+  }
+}
+
+
+resource "aws_instance" "server" {
+  for_each = {
+    first = "t2.micro"
+    secon = "t2.micro"
+  }
+
+  ami           = data.aws_ami.example.id
+  instance_type = "${each.value}"
+
+  tags = {
+    Name = "Server ${each.key}"
+  }
+}
