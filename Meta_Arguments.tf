@@ -163,10 +163,10 @@
 # Child module
 # set에 정의된 버킷 이름을 publish_bucket의 main.tf로 던져서 버킷 생성
 # set의 크기 = s3의 갯수
-module "bucket" {
-  for_each = toset(["assets", "media"])
-  source   = "./publish_bucket"
-  name     = "${each.key}bucketho12341234"
-}
+# module "bucket" {
+#   for_each = toset(["assets", "media"])
+#   source   = "./publish_bucket"
+#   name     = "${each.key}bucketho12341234"
+# }
 
 
