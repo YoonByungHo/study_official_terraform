@@ -129,26 +129,33 @@
 
 # The for_each Meta-Argument
 # map:
-data "aws_ami" "example" {
-  most_recent      = true
+# data "aws_ami" "example" {
+#   most_recent      = true
 
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-kernel-5.10-hvm-2.0.20220606.1-x86_64-*"]
-  }
-}
+#   filter {
+#     name   = "name"
+#     values = ["amzn2-ami-kernel-5.10-hvm-2.0.20220606.1-x86_64-*"]
+#   }
+# }
 
+# # 리소스 내에서 map으로 정의 후 생성
+# # key가 이름에 적용되고 value가 type 정의
+# resource "aws_instance" "server" {
+#   for_each = {
+#     first = "t2.micro"
+#     secon = "t2.micro"
+#   }
 
-resource "aws_instance" "server" {
-  for_each = {
-    first = "t2.micro"
-    secon = "t2.micro"
-  }
+#   ami           = data.aws_ami.example.id
+#   instance_type = "${each.value}"
 
-  ami           = data.aws_ami.example.id
-  instance_type = "${each.value}"
+#   tags = {
+#     Name = "Server ${each.key}"
+#   }
+# }
 
-  tags = {
-    Name = "Server ${each.key}"
-  }
+# set of string
+resource "aws_iam_user" "the-accounts" {
+  for_each = toset( ["Todd", "James", "Alice", "Dottie"] )
+  name     = each.key
 }
