@@ -166,7 +166,7 @@
 module "bucket" {
   for_each = toset(["assets", "media"])
   source   = "./publish_bucket"
-  name     = "${each.key}bucket"
+  name     = "${each.key}bucketho12341234"
 }
 
 
