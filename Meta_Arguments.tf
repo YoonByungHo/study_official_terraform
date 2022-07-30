@@ -213,7 +213,7 @@ resource "aws_instance" "server" {
   instance_type = "t2.micro"
 
   tags = {
-    Name = "Server ${count.index}"
+    Name = "Server"
   }
 
 precondition {
