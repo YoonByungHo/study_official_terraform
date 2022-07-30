@@ -224,20 +224,20 @@ data "aws_ami" "example" {
 # }
 
 # 포스트 조건에 걸려서 생성되지 않고 error_message를 뱉음
-resource "aws_instance" "server" {
+# resource "aws_instance" "server" {
 
-  ami           = data.aws_ami.example.id
-  instance_type = "t2.micro"
+#   ami           = data.aws_ami.example.id
+#   instance_type = "t2.micro"
 
-  tags = {
-    "Component" = "nomad-server"
-  }
-  lifecycle {
-    postcondition {
-      condition     = self.tags["Component"] == "nomad-server"
-      error_message = "tags[\"Component\"] must be \"nomad-server\"."
-    }
-  }
-}
+#   tags = {
+#     "Component" = "nomad-server"
+#   }
+#   lifecycle {
+#     postcondition {
+#       condition     = self.tags["Component"] == "nomad-server"
+#       error_message = "tags[\"Component\"] must be \"nomad-server\"."
+#     }
+#   }
+# }
 
 #post, pre 조건의 차이가 명확히 뭐지?
