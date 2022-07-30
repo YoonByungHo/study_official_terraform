@@ -202,7 +202,7 @@ data "aws_ami" "example" {
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-kernel-5.10-hvm-2.0.20220606.1-arm64-*"]
+    values = ["amzn2-ami-kernel-5.10-hvm-2.0.20220606.1-x86_64-*"]
   }
 }
 
