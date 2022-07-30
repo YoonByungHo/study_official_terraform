@@ -215,9 +215,10 @@ resource "aws_instance" "server" {
   tags = {
     Name = "Server"
   }
-
-precondition {
-    condition     = data.aws_ami.example.architecture == "x86_64"
-    error_message = "The selected AMI must be for the x86_64 architecture."
+  lifecycle {
+    precondition {
+        condition     = data.aws_ami.example.architecture == "x86_64"
+        error_message = "The selected AMI must be for the x86_64 architecture."
+    }
   }
 }
