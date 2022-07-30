@@ -230,12 +230,14 @@ resource "aws_instance" "server" {
   instance_type = "t2.micro"
 
   tags = {
-    Name = "Server"
+    "Component" = "nomad-server"
   }
   lifecycle {
     postcondition {
-        condition     = data.aws_ami.example.architecture == "x86_64"
-        error_message = "The selected AMI must be for the x86_64 architecture."
+      condition     = self.tags["Component"] == "nomad-server"
+      error_message = "tags[\"Component\"] must be \"nomad-server\"."
     }
   }
 }
+
+#post, pre 조건의 차이가 명확히 뭐지?
