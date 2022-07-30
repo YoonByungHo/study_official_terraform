@@ -224,20 +224,59 @@ data "aws_ami" "example" {
 # }
 
 # 포스트 조건에 걸려서 생성되지 않고 error_message를 뱉음
-resource "aws_instance" "server" {
+# resource "aws_instance" "server" {
 
-  ami           = data.aws_ami.example.id
+#   ami           = data.aws_ami.example.id
+#   instance_type = "t2.micro"
+
+#   tags = {
+#     "Component" = "nomad-server11"
+#   }
+#   lifecycle {
+#     postcondition {
+#       condition     = self.tags["Component"] == "nomad-server"
+#       error_message = "tags[\"Component\"] must be \"nomad-server\"."
+#     }
+#   }
+# }
+
+#post, pre 조건의 차이가 명확히 뭐지?
+
+
+## example
+resource "aws_instance" "example" {
   instance_type = "t2.micro"
+  ami           = data.aws_ami.example.id
 
-  tags = {
-    "Component" = "nomad-server11"
-  }
   lifecycle {
+    precondition {
+      condition     = data.aws_ami.example.architecture == "x86_64"
+      error_message = "The selected AMI must be for the x86_64 architecture."
+    }
+
+    # The EC2 instance must be allocated a public DNS hostname.
     postcondition {
-      condition     = self.tags["Component"] == "nomad-server"
-      error_message = "tags[\"Component\"] must be \"nomad-server\"."
+      condition     = self.public_dns != ""
+      error_message = "EC2 instance must be in a VPC that has public DNS hostnames enabled."
     }
   }
 }
 
-#post, pre 조건의 차이가 명확히 뭐지?
+data "aws_ebs_volume" "example" {
+  filter {
+    name = "volume-id"
+    values = [aws_instance.example.root_block_device.volume_id]
+  }
+
+  lifecycle {
+    # The EC2 instance will have an encrypted root volume.
+    postcondition {
+      condition     = self.encrypted
+      error_message = "The server's root volume is not encrypted."
+    }
+  }
+}
+
+output "api_base_url" {
+  value = "https://${aws_instance.example.private_dns}:8433/"
+}
