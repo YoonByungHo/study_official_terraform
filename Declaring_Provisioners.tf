@@ -25,6 +25,6 @@ resource "aws_instance" "server" {
     }
   }
   provisioner "local-exec" {
-    command = "echo The server's IP address is ${self.private_ip} >> ~/test.txt"
+    command = "echo The servers IP address is ${self.private_ip} >> ~/test.txt"
   }
 }
