@@ -13,8 +13,12 @@ data "aws_ami" "amazon_linux_2" {
   owners      = ["amazon"]
 }
 
+data "aws_iam_policy" "ssm_core" {
+  name = "AmazonSSMManagedInstanceCore"
+}
+
 resource "aws_security_group" "example" {
-  name        = "${var.name}-${var.env}-example-sg"
+  name        = "example-sg"
   description = "example"
   vpc_id      = "vpc-07fcd32c280fc8256"
 
@@ -48,7 +52,7 @@ resource "aws_security_group_rule" "outbound_any" {
 }
 
 resource "aws_iam_role" "example" {
-  name               = "${var.name}-${var.env}-example-role"
+  name               = "example-role"
   path               = "/"
   assume_role_policy = <<POLICY
 {
@@ -68,33 +72,38 @@ POLICY
   tags  = var.tf_tag
 }
 
-resource "aws_iam_instance_profile" "ssm_profile" {
-  name = "${var.name}-${var.env}-ssm-profile"
-  role = "${aws_iam_role.ssm_role.name}"
+resource "aws_iam_instance_profile" "example" {
+  name = "example-profile"
+  role = "${aws_iam_role.example.name}"
 }
 
-resource "aws_iam_role_policy_attachment" "ssm_core_attach_ssm_role" {
-  role       = aws_iam_role.ssm_role.name
-  policy_arn = data.aws_iam_policy.ssm_core.arn
+resource "aws_iam_role_policy_attachment" "example_attach_role" {
+  role       = aws_iam_role.example.name
+  policy_arn = data.aws_iam_policy.example.arn
 }
 
-resource "aws_instance" "example" {
-  ami           = data.aws_ami.amazon_linux_2.id
-  instance_type = "t3.micro"
-  iam_instance_profile  = aws_iam_instance_profile.example.id
-  security_groups = [ aws_security_group.example.id ]
-  subnet_id = "subnet-0150c5d47b59b23a5"
-  vpc_security_group_ids = [ aws_security_group.example.id ]
+# resource "aws_instance" "example" {
+#   ami           = data.aws_ami.amazon_linux_2.id
+#   instance_type = "t3.micro"
+#   iam_instance_profile  = aws_iam_instance_profile.example.id
+#   security_groups = [ aws_security_group.example.id ]
+#   subnet_id = "subnet-0150c5d47b59b23a5"
+#   vpc_security_group_ids = [ aws_security_group.example.id ]
 
-  depends_on = [
-    aws_security_group.example,
-    aws_iam_role.example
-  ]
+#   provisioner "local-exec" {
+#     when = create
+#     command = "echo The servers IP address is ${self.private_ip} >> private_ip.txt"
+#   }
 
-  tags                      = {
-      "Name" = "${var.name}-${var.env}-example1"
-  }
-}
+#   depends_on = [
+#     aws_security_group.example,
+#     aws_iam_role.example
+#   ]
+
+#   tags                      = {
+#       "Name" = "example1"
+#   }
+# }
 
 resource "aws_instance" "example2" {
   ami           = data.aws_ami.amazon_linux_2.id
@@ -110,6 +119,6 @@ resource "aws_instance" "example2" {
   ]
 
   tags                      = {
-      "Name" = "${var.name}-${var.env}-example2"
+      "Name" = "example2"
   }
 }
