@@ -265,7 +265,7 @@ resource "aws_instance" "example" {
 data "aws_ebs_volume" "example" {
   filter {
     name = "volume-id"
-    values = [aws_instance.example.root_block_device.volume_id]
+    values = [aws_instance.example.root_block_device.volume_id[0]]
   }
 
   lifecycle {
