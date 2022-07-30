@@ -223,7 +223,7 @@ data "aws_ami" "example" {
 #   }
 # }
 
-포스트 조건에 걸려서 생성되지 않고 error_message를 뱉음
+# 포스트 조건에 걸려서 생성되지 않고 error_message를 뱉음
 resource "aws_instance" "server" {
 
   ami           = data.aws_ami.example.id
