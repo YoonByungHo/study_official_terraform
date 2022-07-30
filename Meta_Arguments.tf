@@ -207,6 +207,23 @@ data "aws_ami" "example" {
 }
 
 # 프리컨디션 조건에 걸려서 생성되지 않고 error_message를 뱉음
+# resource "aws_instance" "server" {
+
+#   ami           = data.aws_ami.example.id
+#   instance_type = "t2.micro"
+
+#   tags = {
+#     Name = "Server"
+#   }
+#   lifecycle {
+#     precondition {
+#         condition     = data.aws_ami.example.architecture == "x86_64"
+#         error_message = "The selected AMI must be for the x86_64 architecture."
+#     }
+#   }
+# }
+
+# 포스트 조건에 걸려서 생성되지 않고 error_message를 뱉음
 resource "aws_instance" "server" {
 
   ami           = data.aws_ami.example.id
@@ -216,7 +233,7 @@ resource "aws_instance" "server" {
     Name = "Server"
   }
   lifecycle {
-    precondition {
+    postcondition {
         condition     = data.aws_ami.example.architecture == "x86_64"
         error_message = "The selected AMI must be for the x86_64 architecture."
     }
