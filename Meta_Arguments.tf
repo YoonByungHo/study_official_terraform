@@ -246,23 +246,23 @@ data "aws_ami" "example" {
 
 
 ## example
-resource "aws_instance" "example" {
-  instance_type = "t2.micro"
-  ami           = data.aws_ami.example.id
+# resource "aws_instance" "example" {
+#   instance_type = "t2.micro"
+#   ami           = data.aws_ami.example.id
 
-  lifecycle {
-    precondition {
-      condition     = data.aws_ami.example.architecture == "x86_64"
-      error_message = "The selected AMI must be for the x86_64 architecture."
-    }
+#   lifecycle {
+#     precondition {
+#       condition     = data.aws_ami.example.architecture == "x86_64"
+#       error_message = "The selected AMI must be for the x86_64 architecture."
+#     }
 
-    # The EC2 instance must be allocated a public DNS hostname.
-    postcondition {
-      condition     = self.public_dns != ""
-      error_message = "EC2 instance must be in a VPC that has public DNS hostnames enabled."
-    }
-  }
-}
+#     # The EC2 instance must be allocated a public DNS hostname.
+#     postcondition {
+#       condition     = self.public_dns != ""
+#       error_message = "EC2 instance must be in a VPC that has public DNS hostnames enabled."
+#     }
+#   }
+# }
 
 # data "aws_ebs_volume" "example" {
 #   filter {
@@ -279,6 +279,7 @@ resource "aws_instance" "example" {
 #   }
 # }
 
-output "api_base_url" {
-  value = "https://${aws_instance.example.private_dns}:8433/"
-}
+# output "api_base_url" {
+#   value = "https://${aws_instance.example.private_dns}:8433/"
+# }
+
