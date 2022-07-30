@@ -241,6 +241,8 @@ data "aws_ami" "example" {
 # }
 
 #post, pre 조건의 차이가 명확히 뭐지?
+#pre는 생성 전에 알 수 있는 정보로 조건을 걸 수 있음
+#post는 생성 후에 알 수 있는 정보들(tag, 암호화 여부)로 조건을 걸 수 있음
 
 
 ## example
@@ -262,20 +264,20 @@ resource "aws_instance" "example" {
   }
 }
 
-data "aws_ebs_volume" "example" {
-  filter {
-    name = "volume-id"
-    values = [aws_instance.example.root_block_device[0].volume_id]
-  }
+# data "aws_ebs_volume" "example" {
+#   filter {
+#     name = "volume-id"
+#     values = [aws_instance.example.root_block_device[0].volume_id]
+#   }
 
-  lifecycle {
-    # The EC2 instance will have an encrypted root volume.
-    postcondition {
-      condition     = self.encrypted
-      error_message = "The server's root volume is not encrypted."
-    }
-  }
-}
+#   lifecycle {
+#     # The EC2 instance will have an encrypted root volume.
+#     postcondition {
+#       condition     = self.encrypted
+#       error_message = "The server's root volume is not encrypted."
+#     }
+#   }
+# }
 
 output "api_base_url" {
   value = "https://${aws_instance.example.private_dns}:8433/"
