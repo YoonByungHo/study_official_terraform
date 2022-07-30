@@ -13,10 +13,6 @@ data "aws_ami" "amazon_linux_2" {
   owners      = ["amazon"]
 }
 
-data "aws_iam_policy" "ssm_core" {
-  name = "AmazonSSMManagedInstanceCore"
-}
-
 resource "aws_security_group" "example" {
   name        = "example-sg"
   description = "example"
@@ -75,7 +71,7 @@ resource "aws_iam_instance_profile" "example" {
 
 resource "aws_iam_role_policy_attachment" "example_attach_role" {
   role       = aws_iam_role.example.name
-  policy_arn = data.aws_iam_policy.example.arn
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
 # resource "aws_instance" "example" {
