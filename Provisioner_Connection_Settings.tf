@@ -21,8 +21,6 @@ resource "aws_security_group" "example" {
   name        = "example-sg"
   description = "example"
   vpc_id      = "vpc-07fcd32c280fc8256"
-
-  tags                      = var.tf_tag
 }
 
 resource "aws_security_group_rule" "inbound_example_22" {
@@ -68,8 +66,6 @@ resource "aws_iam_role" "example" {
   ]
 }
 POLICY
-
-  tags  = var.tf_tag
 }
 
 resource "aws_iam_instance_profile" "example" {
