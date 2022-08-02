@@ -74,17 +74,17 @@ resource "aws_iam_role_policy_attachment" "example_attach_role" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
-resource "aws_instance" "example" {
-  ami           = data.aws_ami.amazon_linux_2.id
-  instance_type = "t3.micro"
-  iam_instance_profile  = aws_iam_instance_profile.example.id
-  security_groups = [ aws_security_group.example.id ]
-  subnet_id = "subnet-0150c5d47b59b23a5"
-  vpc_security_group_ids = [ aws_security_group.example.id ]
-  user_data = <<EOF
-#!/bin/bash
-echo "this is test" >> /home/ec2-user/test.txt
-EOF
+# resource "aws_instance" "example" {
+#   ami           = data.aws_ami.amazon_linux_2.id
+#   instance_type = "t3.micro"
+#   iam_instance_profile  = aws_iam_instance_profile.example.id
+#   security_groups = [ aws_security_group.example.id ]
+#   subnet_id = "subnet-0150c5d47b59b23a5"
+#   vpc_security_group_ids = [ aws_security_group.example.id ]
+#   user_data = <<EOF
+# #!/bin/bash
+# echo "this is test" >> /home/ec2-user/test.txt
+# EOF
 
 # provisioner "file" {
 #   source      = "${path.root}/test.txt"
@@ -98,15 +98,15 @@ EOF
 #   }
 # }
 
-  depends_on = [
-    aws_security_group.example,
-    aws_iam_role.example,
-  ]
+#   depends_on = [
+#     aws_security_group.example,
+#     aws_iam_role.example,
+#   ]
 
-  tags                      = {
-      "Name" = "example1"
-  }
-}
+#   tags                      = {
+#       "Name" = "example1"
+#   }
+# }
 
 # resource "aws_instance" "example2" {
 #   ami           = data.aws_ami.amazon_linux_2.id
