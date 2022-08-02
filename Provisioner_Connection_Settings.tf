@@ -94,7 +94,7 @@ provisioner "file" {
     type     = "ssh"
     user     = "root"
     private_key = "${file("/root/.ssh/id_rsa")}"
-    host     = "${self.ipv4_address}"
+    host     = "${self.private_dns}"
   }
 }
 
