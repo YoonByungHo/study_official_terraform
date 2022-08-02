@@ -94,7 +94,6 @@ provisioner "file" {
   depends_on = [
     aws_security_group.example,
     aws_iam_role.example,
-    aws_instance.example2
   ]
 
   tags                      = {
