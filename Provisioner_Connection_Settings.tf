@@ -92,8 +92,8 @@ provisioner "file" {
 
   connection {
     type     = "ssh"
-    user     = "root"
-    private_key = "${file("/root/.ssh/id_rsa")}"
+    user     = "ec2-user"
+    private_key = "${file("/home/ec2-user/.ssh/id_rsa")}"
     host     = "${self.private_dns}"
   }
 }
