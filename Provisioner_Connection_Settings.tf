@@ -83,20 +83,20 @@ resource "aws_instance" "example" {
   vpc_security_group_ids = [ aws_security_group.example.id ]
   user_data = <<EOF
 #!/bin/bash
-echo "this is test" >> ~/test.txt
+echo "this is test" >> /home/ec2-user/test.txt
 EOF
 
-provisioner "file" {
-  source      = "${path.root}/test.txt"
-  destination = "${path.root}/test11.txt"
+# provisioner "file" {
+#   source      = "${path.root}/test.txt"
+#   destination = "${path.root}/test11.txt"
 
-  connection {
-    type     = "ssh"
-    user     = "ec2-user"
-    private_key = "${file("/home/ec2-user/.ssh/id_rsa")}"
-    host     = "${self.private_dns}"
-  }
-}
+#   connection {
+#     type     = "ssh"
+#     user     = "ec2-user"
+#     private_key = "${file("/home/ec2-user/.ssh/id_rsa")}"
+#     host     = "${self.private_dns}"
+#   }
+# }
 
   depends_on = [
     aws_security_group.example,
