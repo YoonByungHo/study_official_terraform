@@ -113,6 +113,6 @@ resource "aws_instance" "example" {
 resource "null_resource" "example" {
   # Changes to any instance of the cluster requires re-provisioning
   triggers = {
-    cluster_instance_ids = "${join(",", aws_instance.cluster.*.id)}"
+    cluster_instance_ids = "${join(",", aws_instance.example.*.id)}"
   }
 }
