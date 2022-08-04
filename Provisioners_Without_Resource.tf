@@ -81,7 +81,7 @@ resource "aws_instance" "example" {
   instance_type = "t3.micro"
   iam_instance_profile  = aws_iam_instance_profile.example.id
   security_groups = [ aws_security_group.example.id ]
-  subnet_id = "subnet-0150c5d47b59b23a5"
+  subnet_id = "subnet-094917711e29f22f5"
   vpc_security_group_ids = [ aws_security_group.example.id ]
 #   user_data = <<EOF
 # #!/bin/bash
