@@ -34,18 +34,18 @@ resource "aws_security_group_rule" "inbound_example_22" {
   ]
 }
 
-resource "aws_security_group_rule" "outbound_any" {
-  type              = "egress"
-  from_port         = 0
-  to_port           = 65535
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.example.id
+# resource "aws_security_group_rule" "outbound_any" {
+#   type              = "egress"
+#   from_port         = 0
+#   to_port           = 65535
+#   protocol          = "-1"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   security_group_id = aws_security_group.example.id
 
-  depends_on = [
-    aws_security_group.example,
-  ]
-}
+#   depends_on = [
+#     aws_security_group.example,
+#   ]
+# }
 
 resource "aws_iam_role" "example" {
   name               = "example-role"
