@@ -115,4 +115,9 @@ resource "null_resource" "example" {
   triggers = {
     cluster_instance_ids = "${join(",", aws_instance.example.*.id)}"
   }
+  connection {
+    host = "${element(aws_instance.cluster.*.public_ip, 0)}"
+  }
+
 }
+
